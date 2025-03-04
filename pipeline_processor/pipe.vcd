@@ -1,5 +1,5 @@
 $date
-	Tue Mar  4 08:36:04 2025
+	Tue Mar  4 09:14:51 2025
 $end
 $version
 	ModelSim Version 2020.1
@@ -580,6 +580,7 @@ $var wire 1 \% wb_data_i [2] $end
 $var wire 1 ]% wb_data_i [1] $end
 $var wire 1 ^% wb_data_i [0] $end
 $var reg 32 _% wb_data_o [31:0] $end
+$var integer 32 `% i $end
 $upscope $end
 $upscope $end
 $upscope $end
@@ -662,6 +663,7 @@ b100000 _#
 b100000 5$
 b100000 {$
 b100000 4$
+bx `%
 0#
 0$
 0U!
@@ -1722,10 +1724,10 @@ b1100 &
 b1 2$
 1R#
 b101 3$
-b0 x!
+b10000001010000100000011 x!
 b10000 V!
 b10000 '
-b0 (
+b10000001010000100000011 (
 b101 0
 1<
 b1 /
@@ -1763,16 +1765,16 @@ b1010 5
 b10000 r
 b10000 G
 b1100 E
-b0 F
+b10000001010000100000011 F
 b1010 H
 b101 I
 b1100 K
 b100 J
 b1010 C
-b0 *
-b0 +
-b0 ,
-b0 -
+b11 *
+b100 ,
+b10 -
+b10 .
 b1010 2
 b10000 &
 0e"
@@ -1783,23 +1785,20 @@ b10000 &
 1=%
 0<%
 1;%
-0;"
-0:"
 07"
 06"
+13"
 02"
-0,"
+1."
 0'"
-0%"
-0`"
-0_"
 0\"
 0["
+1X"
 0W"
-0Q"
+1S"
 0L"
-0J"
-b0 \#
+b10 ]#
+b11 \#
 0R#
 03!
 02!
@@ -1807,44 +1806,79 @@ b0 \#
 0u!
 0t!
 1s!
+1n#
 0m#
 0o"
-0m"
 0j#
-0h#
-0j"
-0e#
-b0 2$
-b0 3$
+bx 3$
+1S#
 bx x!
 b10100 V!
 0<
 b1 C
 b10100 '
 bx (
-b0 0
-b0 /
-b0 C
-b0 D
-b0 6
+1=
+bx 0
+bx 6
+b1010 D
 b10100 %
-b0 2
-b0 3
+b1 2
+b1010 3
 1o
 0u$
+1t$
 0s$
-01#
-0Q#
-0O#
-0U$
+1r$
+xQ#
+xP#
+xO#
+xN#
+xM#
+xL#
+xK#
+xJ#
+xI#
+xH#
+xG#
+xF#
+xE#
+xD#
+xC#
+xB#
+xA#
+x@#
+x?#
+x>#
+x=#
+x<#
+x;#
+x:#
+x9#
+x8#
+x7#
+x6#
+x5#
+x4#
+x3#
+x2#
 0S$
-b0 z$
+b1011 z$
 0V#
-b0 ?"
-b0 )
-0;
-b0 4
-b0 5
+1V#
+1X#
+b100 ?"
+b100 )
+1?
+b1011 4
+b1011 5
+b100 3
+0t$
+1s$
+0r$
+b101 z$
+b101 4
+b101 5
 #40
 0!
 0#
@@ -1855,22 +1889,56 @@ b10100 r
 b10100 G
 b10000 E
 bx F
-b0 H
-b0 I
+b101 H
+bx I
 b10000 K
-b0 J
-b0 L
-0N
+b10 J
+b11 L
+b10 M
+b101 D
 bx *
 bx +
 bx ,
 bx -
 bx .
 b10100 &
+1d"
 0c"
-0^%
-0\%
+x^%
+x]%
+x\%
+x[%
+xZ%
+xY%
+xX%
+xW%
+xV%
+xU%
+xT%
+xS%
+xR%
+xQ%
+xP%
+xO%
+xN%
+xM%
+xL%
+xK%
+xJ%
+xI%
+xH%
+xG%
+xF%
+xE%
+xD%
+xC%
+xB%
+xA%
+x@%
+x?%
+1>%
 0=%
+1<%
 0;%
 x;"
 x:"
@@ -1936,10 +2004,10 @@ xD"
 xC"
 xB"
 xA"
-0`#
 bx ^#
 bx ]#
 bx \#
+0S#
 13!
 1u!
 xo#
@@ -1968,51 +2036,19 @@ xc#
 xb#
 xa#
 bx 2$
-bx 3$
+xR#
+xS#
 b11000 V!
+x=
+bx D
 b11000 '
-bx 0
+x<
 bx /
 bx C
-bx D
-bx 6
 b11000 %
-bx 3
 bx 2
 0o
 1n
-xu$
-xt$
-xs$
-xr$
-xq$
-xp$
-xo$
-xn$
-xm$
-xl$
-xk$
-xj$
-xi$
-xh$
-xg$
-xf$
-xe$
-xd$
-xc$
-xb$
-xa$
-x`$
-x_$
-x^$
-x]$
-x\$
-x[$
-xZ$
-xY$
-xX$
-xW$
-xV$
 xU$
 xT$
 xS$
@@ -2077,43 +2113,52 @@ xs"
 xr"
 xq"
 xp"
-xQ#
-xP#
-xO#
-xN#
-xM#
-xL#
-xK#
-xJ#
-xI#
-xH#
-xG#
-xF#
-xE#
-xD#
-xC#
-xB#
-xA#
-x@#
-x?#
-x>#
-x=#
-x<#
-x;#
-x:#
-x9#
-x8#
-x7#
-x6#
-x5#
-x4#
-x3#
-x2#
 bx z$
+0V#
+0X#
 bx ?"
 bx )
+0?
+0;
+0R#
+0S#
 bx 4
 bx 5
+0=
+0<
+bx 3
+xu$
+xt$
+xs$
+xr$
+xq$
+xp$
+xo$
+xn$
+xm$
+xl$
+xk$
+xj$
+xi$
+xh$
+xg$
+xf$
+xe$
+xd$
+xc$
+xb$
+xa$
+x`$
+x_$
+x^$
+x]$
+x\$
+x[$
+xZ$
+xY$
+xX$
+xW$
+xV$
 #50
 0!
 0#
@@ -2124,49 +2169,17 @@ b11000 r
 b11000 G
 b10100 E
 bx H
-bx I
 b10100 K
 bx J
 bx L
 bx M
+0N
 b11000 &
 xe"
 xd"
 xc"
 xb"
 xa"
-x^%
-x]%
-x\%
-x[%
-xZ%
-xY%
-xX%
-xW%
-xV%
-xU%
-xT%
-xS%
-xR%
-xQ%
-xP%
-xO%
-xN%
-xM%
-xL%
-xK%
-xJ%
-xI%
-xH%
-xG%
-xF%
-xE%
-xD%
-xC%
-xB%
-xA%
-x@%
-x?%
 x>%
 x=%
 x<%
@@ -2199,6 +2212,7 @@ x"%
 x!%
 x~$
 x}$
+0`#
 03!
 12!
 0u!

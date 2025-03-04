@@ -11,7 +11,7 @@ cModel Technology
 Z0 d/home/waqar/Desktop/ca_lab/pipeline_processor
 vadder_plus_4
 Z1 DXx6 sv_std 3 std 0 22 VYECXdT12H8WgbUP_5Y6:3
-Z2 !s110 1741059361
+Z2 !s110 1741061688
 !i10b 1
 !s100 M>ZITX>DLIRnnZJd;gQLZ3
 Z3 !s11b Dg1SIo80bB@j0V0VzS_@n1
@@ -19,21 +19,21 @@ I2GOZT<HegEe]2ch9iUTYf2
 Z4 VDg1SIo80bB@j0V0VzS_@n1
 S1
 R0
-Z5 w1741020979
+w1741061265
 8adder_plus_4.sv
 Fadder_plus_4.sv
-!i122 10
+!i122 18
 L0 1 11
-Z6 OV;L;2020.1;71
+Z5 OV;L;2020.1;71
 r1
 !s85 0
 31
-Z7 !s108 1741059361.000000
+Z6 !s108 1741061688.000000
 !s107 reg_file.sv|pipe_top.sv|pipe_tb.sv|pipe_controller.sv|pc.sv|instr_mem.sv|imm_ext.sv|data_mem.sv|alu.sv|adder_plus_4.sv|
-Z8 !s90 -work|work|-sv|adder_plus_4.sv|alu.sv|data_mem.sv|imm_ext.sv|instr_mem.sv|pc.sv|pipe_controller.sv|pipe_tb.sv|pipe_top.sv|reg_file.sv|
+Z7 !s90 -work|work|-sv|adder_plus_4.sv|alu.sv|data_mem.sv|imm_ext.sv|instr_mem.sv|pc.sv|pipe_controller.sv|pipe_tb.sv|pipe_top.sv|reg_file.sv|
 !i113 1
-Z9 o-work work -sv
-Z10 tCvgOpt 0
+Z8 o-work work -sv
+Z9 tCvgOpt 0
 valu
 R1
 R2
@@ -44,46 +44,46 @@ IXCJ9i0@9Q>2geL@j@5A150
 R4
 S1
 R0
-R5
+Z10 w1741020979
 8alu.sv
 Falu.sv
-!i122 10
+!i122 18
 L0 1 26
-R6
+R5
 r1
 !s85 0
 31
-R7
+R6
 Z11 !s107 reg_file.sv|pipe_top.sv|pipe_tb.sv|pipe_controller.sv|pc.sv|instr_mem.sv|imm_ext.sv|data_mem.sv|alu.sv|adder_plus_4.sv|
-R8
+R7
 !i113 1
+R8
 R9
-R10
 vdata_mem
 R1
 R2
 !i10b 1
-!s100 2b>^Qo9@DM1E91zVjSanS1
+!s100 F2ZKf5mFHTeh7g6YaNGMf3
 R3
-Ii6>M3jBETUPk`@iVb9`^z3
+Ih^z3FaUg[aW>UnWP?zLlD0
 R4
 S1
 R0
-R5
+w1741061241
 8data_mem.sv
 Fdata_mem.sv
-!i122 10
-L0 1 22
-R6
+!i122 18
+L0 1 28
+R5
 r1
 !s85 0
 31
-R7
+R6
 R11
-R8
+R7
 !i113 1
+R8
 R9
-R10
 vimm_ext
 R1
 R2
@@ -94,21 +94,21 @@ I9J8CmH=EhhQDR7YgS3^:S2
 R4
 S1
 R0
-R5
+R10
 8imm_ext.sv
 Fimm_ext.sv
-!i122 10
+!i122 18
 L0 1 20
-R6
+R5
 r1
 !s85 0
 31
-R7
+R6
 R11
-R8
+R7
 !i113 1
+R8
 R9
-R10
 vinstr_mem
 R1
 R2
@@ -119,21 +119,21 @@ IfCVemoMZ83koE9=:69DnE0
 R4
 S1
 R0
-R5
+R10
 8instr_mem.sv
 Finstr_mem.sv
-!i122 10
+!i122 18
 L0 1 17
-R6
+R5
 r1
 !s85 0
 31
-R7
+R6
 R11
-R8
+R7
 !i113 1
+R8
 R9
-R10
 vpc
 R1
 R2
@@ -144,21 +144,21 @@ Il5X950S=PJ_2NaKbgR0Ji0
 R4
 S1
 R0
-R5
+w1741061305
 8pc.sv
 Fpc.sv
-!i122 10
+!i122 18
 L0 1 21
-R6
+R5
 r1
 !s85 0
 31
-R7
+R6
 R11
-R8
+R7
 !i113 1
+R8
 R9
-R10
 vpipe_controller
 R1
 R2
@@ -172,18 +172,18 @@ R0
 w1741056007
 8pipe_controller.sv
 Fpipe_controller.sv
-!i122 10
+!i122 18
 L0 1 161
-R6
+R5
 r1
 !s85 0
 31
-R7
+R6
 R11
-R8
+R7
 !i113 1
+R8
 R9
-R10
 vpipe_top
 R1
 R2
@@ -194,21 +194,21 @@ Ij0EI37[_75^dOVkVB5=Rf0
 R4
 S1
 R0
-w1741056061
+w1741061271
 8pipe_top.sv
 Fpipe_top.sv
-!i122 10
+!i122 18
 L0 1 218
-R6
+R5
 r1
 !s85 0
 31
-R7
+R6
 R11
-R8
+R7
 !i113 1
+R8
 R9
-R10
 vpipe_top_tb
 R1
 R2
@@ -222,18 +222,18 @@ R0
 w1741045334
 8pipe_tb.sv
 Fpipe_tb.sv
-!i122 10
+!i122 18
 L0 1 30
-R6
+R5
 r1
 !s85 0
 31
-R7
+R6
 R11
-R8
+R7
 !i113 1
+R8
 R9
-R10
 vreg_file
 R1
 R2
@@ -244,18 +244,18 @@ Ik;1oP8^UgEQl>1`>1eVUU2
 R4
 S1
 R0
-R5
+R10
 8reg_file.sv
 Freg_file.sv
-!i122 10
+!i122 18
 L0 1 33
-R6
+R5
 r1
 !s85 0
 31
-R7
+R6
 R11
-R8
+R7
 !i113 1
+R8
 R9
-R10

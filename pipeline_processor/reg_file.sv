@@ -17,7 +17,7 @@ module reg_file #(
     // Register Initialization using a for loop
     always_ff @(posedge clk_i or negedge rst_n_i) begin
         if (!rst_n_i) begin
-            for (i = 0; i < 32; i = i + 1) begin
+            for (i = 0; i < 32; i++) begin
                 reg_file[i] <= i;  // Assign each register with its index value
             end
         end 

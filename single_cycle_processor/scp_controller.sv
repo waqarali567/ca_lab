@@ -31,7 +31,7 @@ module scp_controller #(
         B_SEL_o         = 1'b0;
         ALU_OP_o        = 4'b0000;
         WE_o            = 1'b0;
-        WB_SEL_o        = 2'b00;
+        WB_SEL_o        = 2'b01;
 
         case(opcode)
 
@@ -70,6 +70,7 @@ module scp_controller #(
             7'b0000011: begin
                 REG_WRITE_o = 1'b1;
                 B_SEL_o     = 1'b1;
+                WB_SEL_o    = 2'b00;
             end
 
             //JALR --> I-Type

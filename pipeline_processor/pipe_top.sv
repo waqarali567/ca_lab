@@ -92,9 +92,17 @@ module pipe_top (
     );
 
     always_ff @(posedge clk_i) begin : IF_STAGE
-        pc_next_IF  <= pc_next;
-        pc_curr_IF  <= pc_curr;
-        instr_IF    <= instr;
+        if(PC_SEL) begin
+            pc_next_IF  <= 0;
+            pc_curr_IF  <= 0;
+            instr_IF    <= 32'h13;
+
+        end
+        else begin
+            pc_next_IF  <= pc_next;
+            pc_curr_IF  <= pc_curr;
+            instr_IF    <= instr;
+        end
     end
 
 ///////////////////////////       DE_STAGE         /////////////////////////////////////// 
@@ -117,8 +125,8 @@ module pipe_top (
                .rd_addr_i(rd_addr_DE),
                .rs1_addr_i(rs1_addr),
                .rs2_addr_i(rs2_addr),
-               .rs1_data_i(rs1_data),
-               .rs2_data_i(rs2_data),
+               .rs1_data_i(sel_fwd_a_i),
+               .rs2_data_i(sel_fwd_b_i),
                //Forwarding Signals
                .FWD_A_o(FWD_A),
                .FWD_B_o(FWD_B),
@@ -139,7 +147,7 @@ module pipe_top (
         .REG_WRITE_i(REG_WRITE_DE),
         .rs1_addr_i(rs1_addr),
         .rs2_addr_i(rs2_addr),
-        .rd_addr_i(rd_addr),
+        .rd_addr_i(rd_addr_DE),
         .wb_data_i(wb_data),
         .rs1_data_o(rs1_data),
         .rs2_data_o(rs2_data)

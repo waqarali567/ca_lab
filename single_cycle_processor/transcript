@@ -1,5 +1,5 @@
 # vsim -c -do "run -all; quit" scp_top_tb 
-# Start time: 07:39:05 on Mar 04,2025
+# Start time: 11:09:39 on Mar 04,2025
 # Loading sv_std.std
 # Loading work.scp_top_tb
 # Loading work.scp_top
@@ -17,5 +17,5 @@
 # Break in Module scp_top_tb at scp_tb.sv line 22
 # Stopped at scp_tb.sv line 22
 #  quit
-# End time: 07:39:05 on Mar 04,2025, Elapsed time: 0:00:00
+# End time: 11:09:39 on Mar 04,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0

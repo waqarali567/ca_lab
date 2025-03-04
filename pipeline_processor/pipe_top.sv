@@ -53,6 +53,11 @@ module pipe_top (
     logic [6:0]  opcode_DE;
     logic [2:0]  func3_DE;
 
+    //Control Signals
+    logic REG_WRITE_DE;
+    logic WE_DE;
+    logic WB_SEL_DE;
+
 ///////////////////////////       IF_STAGE         ///////////////////////////////////////  
 
     assign pc_next_sel = (PC_SEL) ? wb_addr_store_type_DE : pc_next;
@@ -118,7 +123,7 @@ module pipe_top (
     reg_file reg_file_inst (
         .clk_i(clk_i),
         .rst_n_i(rst_n_i),
-        .REG_WRITE_i(REG_WRITE),
+        .REG_WRITE_i(REG_WRITE_DE),
         .rs1_addr_i(rs1_addr),
         .rs2_addr_i(rs2_addr),
         .rd_addr_i(rd_addr),
@@ -158,6 +163,10 @@ module pipe_top (
         pc_next_DE             <= pc_next_IF;
         opcode_DE              <= opcode;
         func3_DE               <= func3;
+        // Control Signal
+        REG_WRITE_DE           <= REG_WRITE;
+        WE_DE                  <= WE;
+        WB_SEL_DE              <= WB_SEL;
     end
 
 ///////////////////////////       MW_STAGE         /////////////////////////////////////// 
@@ -166,7 +175,7 @@ module pipe_top (
     data_mem data_mem_inst (
         .clk_i(clk_i),
         .rst_n_i(rst_n_i),
-        .WE_i(WE),
+        .WE_i(WE_DE),
         .wb_addr_i(wb_addr_store_type_DE),
         .wb_data_i(wb_data_store_type_DE),
         .wb_data_o(mem_out)
@@ -181,8 +190,8 @@ module pipe_top (
                                )                                               // LW (Load Word, no extension)
                                :mem_out;
 
-    assign wb_data = (WB_SEL == 2) ? pc_next_DE :  //pc_next will be updated
-                     (WB_SEL == 1) ? wb_addr_store_type_DE :
+    assign wb_data = (WB_SEL_DE == 2) ? pc_next_DE :  //pc_next will be updated
+                     (WB_SEL_DE == 1) ? wb_addr_store_type_DE :
                       wb_data_load_type;
 
 endmodule

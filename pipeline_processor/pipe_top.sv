@@ -1,4 +1,4 @@
-module scp_top (
+module pipe_top (
     input logic clk_i, 
     input logic rst_n_i
 );
@@ -42,7 +42,20 @@ module scp_top (
     logic WE;
     logic [1:0] WB_SEL;
 
-    assign pc_next_sel = (PC_SEL) ? alu_out : pc_next;
+    //IF_STAGE
+    logic [31:0] instr_IF;
+    logic [31:0] pc_next_IF;
+
+    //DE STAGE
+    logic [31:0] wb_addr_store_type_DE;
+    logic [31:0] wb_data_store_type_DE;
+    logic [31:0] pc_next_DE;
+    logic [6:0]  opcode_DE;
+    logic [2:0]  func3_DE;
+
+///////////////////////////       IF_STAGE         ///////////////////////////////////////  
+
+    assign pc_next_sel = (PC_SEL) ? wb_addr_store_type_DE : pc_next;
 
     //PC Instance
     pc pc_inst (
@@ -66,18 +79,40 @@ module scp_top (
         .instr_o(instr)
     );
 
+    always_ff @(posedge clk_i) begin : IF_STAGE
+        pc_next_IF  <= pc_next;
+        pc_curr_IF  <= pc_curr;
+        instr_IF    <= instr;
+    end
+
+///////////////////////////       DE_STAGE         /////////////////////////////////////// 
+
     imm_ext imm_ext_inst(
-        .instr_i(instr),
+        .instr_i(instr_IF),
         .IMM_SEL_i(IMM_SEL),
         .imm_ext_val_o(imm_ext_val)
     );
 
     //Extract Fields from Instruction
-    assign opcode   = instr[6:0]; 
-    assign rs1_addr = instr[19:15];
-    assign rs2_addr = instr[24:20];
-    assign rd_addr  = instr[11:7];
-    assign func3    = instr[14:12];  // ALU operation from funct3
+    assign opcode   = instr_IF[6:0]; 
+    assign rs1_addr = instr_IF[19:15];
+    assign rs2_addr = instr_IF[24:20];
+    assign rd_addr  = instr_IF[11:7];
+    assign func3    = instr_IF[14:12];  // ALU operation from funct3
+
+    pipe_controller pipe_controller_inst(
+               .instr_i(instr_IF),
+               .rs1_data_i(rs1_data),
+               .rs2_data_i(rs2_data),
+               .PC_SEL_o(PC_SEL),
+               .IMM_SEL_o(IMM_SEL),    
+               .REG_WRITE_o(REG_WRITE),
+               .A_SEL_o(A_SEL),
+               .B_SEL_o(B_SEL),     
+               .ALU_OP_o(ALU_OP), 
+               .WE_o(WE),         
+               .WB_SEL_o(WB_SEL)
+               );
 
     //Register File Instance
     reg_file reg_file_inst (
@@ -92,7 +127,7 @@ module scp_top (
         .rs2_data_o(rs2_data)
     );
 
-    assign sel_a_i = (A_SEL)? pc_curr     : rs1_data;
+    assign sel_a_i = (A_SEL)? pc_curr_IF  : rs1_data;
     assign sel_b_i = (B_SEL)? imm_ext_val : rs2_data;
 
     //ALU Instance
@@ -116,41 +151,38 @@ module scp_top (
                                 )
                                 :alu_out;
 
+    
+    always_ff @(posedge clk_i) begin : DE
+        wb_addr_store_type_DE  <= wb_addr_store_type;
+        wb_data_store_type_DE  <= wb_data_store_type;
+        pc_next_DE             <= pc_next_IF;
+        opcode_DE              <= opcode;
+        func3_DE               <= func3;
+    end
+
+///////////////////////////       MW_STAGE         /////////////////////////////////////// 
+
     //Data Memory Instance
     data_mem data_mem_inst (
         .clk_i(clk_i),
         .rst_n_i(rst_n_i),
         .WE_i(WE),
-        .wb_addr_i(wb_addr_store_type),
-        .wb_data_i(wb_data_store_type),
+        .wb_addr_i(wb_addr_store_type_DE),
+        .wb_data_i(wb_data_store_type_DE),
         .wb_data_o(mem_out)
     );
 
-    assign wb_data_load_type = (opcode == 7'b0000011) ? (
-                               (func3 == 3'b000) ? {{24{mem_out[7]}}, mem_out[7:0]}  :  // LB (Sign-extend byte)
-                               (func3 == 3'b001) ? {{16{mem_out[15]}}, mem_out[15:0]} :  // LH (Sign-extend halfword)
-                               (func3 == 3'b100) ? {24'b0, mem_out[7:0]}              :  // LBU (Zero-extend byte)
-                               (func3 == 3'b101) ? {16'b0, mem_out[15:0]}             :  // LHU (Zero-extend halfword)
+    assign wb_data_load_type = (opcode_DE == 7'b0000011) ? (
+                               (func3_DE == 3'b000) ? {{24{mem_out[7]}}, mem_out[7:0]}  :  // LB (Sign-extend byte)
+                               (func3_DE == 3'b001) ? {{16{mem_out[15]}}, mem_out[15:0]} :  // LH (Sign-extend halfword)
+                               (func3_DE == 3'b100) ? {24'b0, mem_out[7:0]}              :  // LBU (Zero-extend byte)
+                               (func3_DE == 3'b101) ? {16'b0, mem_out[15:0]}             :  // LHU (Zero-extend halfword)
                                mem_out 
                                )                                               // LW (Load Word, no extension)
                                :mem_out;
 
-    scp_controller scp_controller_inst(
-                   .instr_i(instr),
-                   .rs1_data_i(rs1_data),
-                   .rs2_data_i(rs2_data),
-                   .PC_SEL_o(PC_SEL),
-                   .IMM_SEL_o(IMM_SEL),    
-                   .REG_WRITE_o(REG_WRITE),
-                   .A_SEL_o(A_SEL),
-                   .B_SEL_o(B_SEL),     
-                   .ALU_OP_o(ALU_OP), 
-                   .WE_o(WE),         
-                   .WB_SEL_o(WB_SEL)
-                   );
-
-    assign wb_data = (WB_SEL == 2) ? pc_next :
-                     (WB_SEL == 1) ? alu_out :
+    assign wb_data = (WB_SEL == 2) ? pc_next_DE :  //pc_next will be updated
+                     (WB_SEL == 1) ? wb_addr_store_type_DE :
                       wb_data_load_type;
 
 endmodule

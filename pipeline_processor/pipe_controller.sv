@@ -1,4 +1,4 @@
-module scp_controller #(
+module pipe_controller #(
     parameter X_LEN = 32
 ) (
     input  logic [X_LEN-1:0] instr_i,

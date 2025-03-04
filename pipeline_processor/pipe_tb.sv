@@ -1,9 +1,9 @@
-module scp_top_tb;
+module pipe_top_tb;
 
     logic clk;
     logic rst_n;
 
-    scp_top dut (
+    pipe_top dut (
         .clk_i(clk),
         .rst_n_i(rst_n)
     );
@@ -23,8 +23,8 @@ module scp_top_tb;
     end
 
     initial begin
-        $dumpfile("scp.vcd"); // VCD File Name
-        $dumpvars(0, scp_top_tb);
+        $dumpfile("pipe.vcd"); // VCD File Name
+        $dumpvars(0, pipe_top_tb);
     end
 
 endmodule

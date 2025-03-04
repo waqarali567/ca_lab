@@ -131,18 +131,20 @@ module scp_controller #(
             //U Instruction
 
             //AUIPC
-            7'b0010111:
-            IMM_SEL_o    = 3'b100;
-            REG_WRITE_o  = 1'b1;
-            B_SEL_o      = 1'b1;
-            WB_SEL_o     = 2'b01;
+            7'b0010111: begin
+                IMM_SEL_o    = 3'b100;
+                REG_WRITE_o  = 1'b1;
+                B_SEL_o      = 1'b1;
+                WB_SEL_o     = 2'b01;
+            end
 
             //LUI
-            7'b0110111:
-            IMM_SEL_o    = 3'b100;
-            REG_WRITE_o  = 1'b1;
-            B_SEL_o      = 1'b1;
-            WB_SEL_o     = 2'b01;
+            7'b0110111: begin
+                IMM_SEL_o    = 3'b100;
+                REG_WRITE_o  = 1'b1;
+                B_SEL_o      = 1'b1;
+                WB_SEL_o     = 2'b01;
+            end
         endcase
 
     end

@@ -2,8 +2,13 @@ module pipe_controller #(
     parameter X_LEN = 32
 ) (
     input  logic [X_LEN-1:0] instr_i,
+    input  logic [4:0] rd_addr_i,
+    input  logic [4:0] rs1_addr_i,
+    input  logic [4:0] rs2_addr_i,
     input  logic [X_LEN-1:0] rs1_data_i,
     input  logic [X_LEN-1:0] rs2_data_i,
+    output logic FWD_A_o,
+    output logic FWD_B_o,
     output logic PC_SEL_o,
     output logic [2:0] IMM_SEL_o,    
     output logic REG_WRITE_o,
@@ -20,8 +25,12 @@ module pipe_controller #(
     logic [6:0] func7;
 
     assign opcode = instr_i[6:0];   // Opcode (7 bits)
-    assign func3 = instr_i[14:12]; // Funct3 (3 bits)
-    assign func7 = instr_i[31:25]; // Funct7 (7 bits)
+    assign func3  = instr_i[14:12]; // Funct3 (3 bits)
+    assign func7  = instr_i[31:25]; // Funct7 (7 bits)
+
+    //Forwarding
+    assign FWD_A_o = (((rs1_addr_i == rd_addr_i) & REG_WRITE_o) & (rs1_addr_i != 0)); 
+    assign FWD_B_o = (((rs2_addr_i == rd_addr_i) & REG_WRITE_o) & (rs2_addr_i != 0)); 
 
     always_comb begin
         PC_SEL_o        = 1'b0;
@@ -131,18 +140,20 @@ module pipe_controller #(
             //U Instruction
 
             //AUIPC
-            7'b0010111:
-            IMM_SEL_o    = 3'b100;
-            REG_WRITE_o  = 1'b1;
-            B_SEL_o      = 1'b1;
-            WB_SEL_o     = 2'b01;
+            7'b0010111: begin
+                IMM_SEL_o    = 3'b100;
+                REG_WRITE_o  = 1'b1;
+                B_SEL_o      = 1'b1;
+                WB_SEL_o     = 2'b01;
+            end
 
             //LUI
-            7'b0110111:
-            IMM_SEL_o    = 3'b100;
-            REG_WRITE_o  = 1'b1;
-            B_SEL_o      = 1'b1;
-            WB_SEL_o     = 2'b01;
+            7'b0110111: begin
+                IMM_SEL_o    = 3'b100;
+                REG_WRITE_o  = 1'b1;
+                B_SEL_o      = 1'b1;
+                WB_SEL_o     = 2'b01;
+            end
         endcase
 
     end

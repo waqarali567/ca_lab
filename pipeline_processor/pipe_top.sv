@@ -37,18 +37,25 @@ module pipe_top (
     logic PC_SEL;
     logic [2:0]  IMM_SEL;
     logic REG_WRITE;
+    logic FWD_A, FWD_B;
     logic A_SEL, B_SEL;
     logic [3:0] ALU_OP;
     logic WE;
     logic [1:0] WB_SEL;
 
+    //Forwarded Data Signals
+    logic [31:0] sel_fwd_a_i;
+    logic [31:0] sel_fwd_b_i;
+
     //IF_STAGE
+    logic [31:0] pc_curr_IF;
     logic [31:0] instr_IF;
     logic [31:0] pc_next_IF;
 
     //DE STAGE
     logic [31:0] wb_addr_store_type_DE;
     logic [31:0] wb_data_store_type_DE;
+    logic [4:0]  rd_addr_DE;
     logic [31:0] pc_next_DE;
     logic [6:0]  opcode_DE;
     logic [2:0]  func3_DE;
@@ -107,8 +114,14 @@ module pipe_top (
 
     pipe_controller pipe_controller_inst(
                .instr_i(instr_IF),
+               .rd_addr_i(rd_addr_DE),
+               .rs1_addr_i(rs1_addr),
+               .rs2_addr_i(rs2_addr),
                .rs1_data_i(rs1_data),
                .rs2_data_i(rs2_data),
+               //Forwarding Signals
+               .FWD_A_o(FWD_A),
+               .FWD_B_o(FWD_B),
                .PC_SEL_o(PC_SEL),
                .IMM_SEL_o(IMM_SEL),    
                .REG_WRITE_o(REG_WRITE),
@@ -132,8 +145,15 @@ module pipe_top (
         .rs2_data_o(rs2_data)
     );
 
-    assign sel_a_i = (A_SEL)? pc_curr_IF  : rs1_data;
-    assign sel_b_i = (B_SEL)? imm_ext_val : rs2_data;
+    //Forwarding
+    assign sel_fwd_a_i = (FWD_A) ? wb_addr_store_type_DE :
+                         rs1_data;
+    assign sel_fwd_b_i = (FWD_B) ? wb_addr_store_type_DE :
+                         rs2_data;
+
+    //Data Selection
+    assign sel_a_i = (A_SEL)? pc_curr_IF  : sel_fwd_a_i;
+    assign sel_b_i = (B_SEL)? imm_ext_val : sel_fwd_b_i;
 
     //ALU Instance
     alu alu_inst (
@@ -161,6 +181,7 @@ module pipe_top (
         wb_addr_store_type_DE  <= wb_addr_store_type;
         wb_data_store_type_DE  <= wb_data_store_type;
         pc_next_DE             <= pc_next_IF;
+        rd_addr_DE             <= rd_addr;
         opcode_DE              <= opcode;
         func3_DE               <= func3;
         // Control Signal

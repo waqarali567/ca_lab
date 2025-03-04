@@ -1,0 +1,21 @@
+# vsim -c -do "run -all; quit" pipe_top_tb 
+# Start time: 08:36:03 on Mar 04,2025
+# Loading sv_std.std
+# Loading work.pipe_top_tb
+# Loading work.pipe_top
+# Loading work.pc
+# Loading work.adder_plus_4
+# Loading work.instr_mem
+# Loading work.imm_ext
+# Loading work.pipe_controller
+# Loading work.reg_file
+# Loading work.alu
+# Loading work.data_mem
+# run -all
+# ** Note: $stop    : pipe_tb.sv(22)
+#    Time: 205 ps  Iteration: 0  Instance: /pipe_top_tb
+# Break in Module pipe_top_tb at pipe_tb.sv line 22
+# Stopped at pipe_tb.sv line 22
+#  quit
+# End time: 08:36:04 on Mar 04,2025, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
